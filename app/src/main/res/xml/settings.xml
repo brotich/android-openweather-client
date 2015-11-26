@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="Location">
+        <EditTextPreference
+            android:defaultValue="London,UK"
+            android:key="pref_weatherLocation"
+            android:summary="Location Here"
+            android:title="Location" />
+
+        <ListPreference
+            android:defaultValue="D"
+            android:entries="@array/weather_units_names"
+            android:entryValues="@array/weather_units_values"
+            android:key="pref_weatherUnits"
+            android:summary="Units Here"
+            android:title="Units" />
+    </PreferenceCategory>
+
+
+</PreferenceScreen>
