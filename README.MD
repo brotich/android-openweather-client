@@ -1,1 +1,1 @@
-To DO
+Add details for the project
