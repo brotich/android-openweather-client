@@ -10,8 +10,9 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 
 import local.openweather.R;
 import local.openweather.model.WeatherForecastData;
@@ -55,11 +56,8 @@ public class WeatherForecastAdapter extends ArrayAdapter {
 
         WeatherForecastData.Forecast forecast = getItem(position);
 
-        if (forecast.dayOfWeek == 0) {
-            holder.dayOfWeek.setText("Tomorrow");
-        } else {
-            holder.dayOfWeek.setText(getDayOfWeek(forecast.dayOfWeek));
-        }
+        holder.dayOfWeek.setText(getDayOfWeek(forecast.dt));
+
         holder.weatherDescription.setText(forecast.weather.description);
         holder.temperatures.setText(String.format("%s - %s", displayTemperature(forecast.temp.temp_min),
                 displayTemperature(forecast.temp.temp_max)));
@@ -68,42 +66,22 @@ public class WeatherForecastAdapter extends ArrayAdapter {
         return convertView;
     }
 
-    private String getDayOfWeek(int paramInt) {
-        Calendar localCalender = Calendar.getInstance();
-        localCalender.add(Calendar.DAY_OF_MONTH, paramInt + 1);
+    private String getDayOfWeek(long paramLong) {
+        SimpleDateFormat ft = new SimpleDateFormat("EEEE");
+        Date dt = new Date(paramLong);
 
-        switch (localCalender.get(Calendar.DAY_OF_WEEK)) {
-            case 1:
-                return "Sunday";
-            case 2:
-                return "Monday";
-            case 3:
-                return "Tuesday";
-            case 4:
-                return "Wednesday";
-            case 5:
-                return "Thursday";
-            case 6:
-                return "Friday";
-            case 7:
-                return "Saturday";
-            default:
-                return null;
-        }
-
+        return ft.format(dt);
     }
 
     private String displayTemperature(double paramDouble) {
 
         double localTemp;
-        String units;
-
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
         String displayUnits = sharedPref.getString("pref_weatherUnits", "D");
 
         switch (displayUnits) {
             case "F":
-                localTemp = ((9 / 5) * paramDouble) + 32;
+                localTemp = ((9.0 / 5.0) * paramDouble) + 32;
                 break;
             default:
             case "D":

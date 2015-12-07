@@ -1,6 +1,5 @@
 package local.openweather.util;
 
-import android.graphics.Bitmap;
 import android.net.Uri;
 
 import java.io.BufferedReader;
@@ -74,11 +73,6 @@ public class RestClient {
                 }
             }
         }
-    }
-
-    public Bitmap getBitmapFromUrl(String paramString) {  // FIXME: 10/21/2015 Download image from url
-
-        return null;
     }
 
     private String createUrl() throws URISyntaxException {

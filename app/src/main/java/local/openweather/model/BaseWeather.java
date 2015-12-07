@@ -1,9 +1,11 @@
 package local.openweather.model;
 
+import java.io.Serializable;
+
 /**
  * Created by brian on 10/18/2015.
  */
-public abstract class BaseWeather {
+public abstract class BaseWeather implements Serializable {
 
     public class Location {
         public String city;

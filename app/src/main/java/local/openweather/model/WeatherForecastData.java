@@ -13,7 +13,7 @@ public class WeatherForecastData extends BaseWeather {
 
     public class Forecast {
         public int dayOfWeek;
-        public float unixTime;
+        public long dt;
         public Weather weather = new Weather();
         public Temperature temp = new Temperature();
         public Wind wind = new Wind();

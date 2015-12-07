@@ -51,7 +51,7 @@ public class JSONParser {
             String mainWeather = ((JSONObject) localObject).getString("main");
             String description = ((JSONObject) localObject).getString("description");
 
-            //wind values //// FIXME: 10/19/2015 calculate wind direction to E,W,S and add units
+            //wind values
             localObject = localJSONObject.getJSONObject("wind");
             double windSpeed = ((JSONObject) localObject).getDouble("speed");
             double windDeg = ((JSONObject) localObject).getDouble("deg");
@@ -87,7 +87,7 @@ public class JSONParser {
             localCurrentWeather.temp.temp = temp;
             localCurrentWeather.temp.temp_max = temp_max;
             localCurrentWeather.temp.temp_min = temp_min;
-            localCurrentWeather.temp.units = '\u2103'; // FIXME: 10/19/2015
+            localCurrentWeather.temp.units = '\u2103'; //FIXME updates units here
 
             localCurrentWeather.weather.main = mainWeather;
             localCurrentWeather.weather.description = description;
@@ -137,6 +137,9 @@ public class JSONParser {
             for (int i = 0; i < forecastDays; i++) {
                 JSONObject dayForecast = ((JSONArray) localObject).getJSONObject(i);
 
+                //time of forecast
+                long dt = dayForecast.getLong("dt");
+
                 //wind values
                 double windSpeed = dayForecast.getDouble("speed");
                 double windDirection = dayForecast.getDouble("deg");
@@ -159,6 +162,7 @@ public class JSONParser {
                 double temp_eve = object.getDouble("eve");
                 double temp_night = object.getDouble("night");
 
+
                 //main weather details
                 object = (dayForecast.getJSONArray("weather")).getJSONObject(0);
                 int id = object.getInt("id");
@@ -168,6 +172,9 @@ public class JSONParser {
 
                 //create forecast object add to array
                 WeatherForecastData.Forecast localForecast = new WeatherForecastData().new Forecast();
+
+                localForecast.dt = dt * 1000L;
+
                 localForecast.weather.main = main;
                 localForecast.weather.description = description;
                 localForecast.weather.clouds = clouds;
@@ -187,7 +194,6 @@ public class JSONParser {
                 localForecast.wind.deg = windDirection;
 
                 localForecast.dayOfWeek = i;
-                localForecast.unixTime = 100L;
 
                 localForecastData.add(localForecast);
 
